@@ -5,30 +5,22 @@
 ## Model
 
 - User
-
-    ```json
-    {
-    	"user": {
-    		"email": string,
-    	  "token": string,
-    	  "username": string,
-    	  "bio": string,
-    	  "image": string
-    	}
-    }
-    ```
+  ```tsx
+  interface User {
+    email: string;
+    token: string;
+    username: string;
+    bio: string;
+    image: string;
+  }
+  ```
 
 - Error
-
-    ```json
-    {
-      "errors":{
-        "body": [
-          "can't be empty"
-        ]
-      }
-    }
-    ```
+  ```tsx
+  interface Error {
+    errors: { [key: string]: string | Array<any> };
+  }
+  ```
 
 ## Endpoint
 
