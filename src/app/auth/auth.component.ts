@@ -1,39 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Error } from '../models';
+import { UserService } from '../shared';
 
 @Component({
   selector: 'auth-page',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-
   authType = '';
   title = '';
   isSubmitting = false;
   authForm: FormGroup;
 
   constructor(
-    private router: ActivatedRoute,
-    private fb: FormBuilder
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder,
+    private userService: UserService
   ) {
     this.authForm = this.fb.group({
-      email : ['', Validators.required],
-      password : ['', Validators.required]
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.router.url.subscribe(data => {
+    this.activatedRoute.url.subscribe((data) => {
       // Get the last piece of the URL (it's either 'login' or 'register')
       this.authType = data[data.length - 1].path;
 
       // Set a title for the page accordingly
-      this.title = (this.authType === 'login') ? 'Sign In' : 'Sign Up';
+      this.title = this.authType === 'login' ? 'Sign In' : 'Sign Up';
 
       // add form control for username if this is the register page
-      this.authForm.addControl('username', new FormControl('', Validators.required));
+      this.authForm.addControl(
+        'username',
+        new FormControl('', Validators.required)
+      );
     });
   }
 
@@ -41,7 +52,12 @@ export class AuthComponent implements OnInit {
     this.isSubmitting = true;
 
     const credentials = this.authForm.value;
-    console.log(credentials);
+    this.userService.attemptAuth(this.authType, credentials).subscribe(
+      (_) => this.router.navigate(['/']),
+      (err) => {
+        console.log(err as Error);
+        this.isSubmitting = false;
+      }
+    );
   }
-
 }
