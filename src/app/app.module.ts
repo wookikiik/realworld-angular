@@ -1,16 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { FooterComponent, HeaderComponent } from './shared';
+import { HomeModule } from './home/home.module';
+
+const rounter = RouterModule.forRoot([], {useHash: true});
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    rounter,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
