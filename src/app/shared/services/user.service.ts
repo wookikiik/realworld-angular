@@ -16,7 +16,9 @@ export class UserService {
     .pipe(distinctUntilChanged());
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {
+    this.isAuthenticatedSubject.next(false);
+  }
 
   private setAuth(user: User): void {
     this.currentUserSubject.next(user);
