@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Error } from '../models';
+import { Errors } from '../models';
 import { UserService } from '../shared';
 
 @Component({
@@ -19,6 +19,7 @@ export class AuthComponent implements OnInit {
   title = '';
   isSubmitting = false;
   authForm: FormGroup;
+  errors: Errors;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,7 +56,8 @@ export class AuthComponent implements OnInit {
     this.userService.attemptAuth(this.authType, credentials).subscribe(
       (_) => this.router.navigate(['/']),
       (err) => {
-        console.log(err as Error);
+        // console.log(err as Errors);
+        this.errors = err as Errors;
         this.isSubmitting = false;
       }
     );

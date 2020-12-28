@@ -283,5 +283,171 @@ export class AuthComponent implements OnInit {
   }
 }
 ```
-## TODO
-[ ] Error 메시지 처리
+# Error 메시지 처리
+
+## ListErrors component 생성
+
+```bash
+ng generate component shared/listErrors --selector=list-errors
+```
+
+src/app/shared/list-errors/list-errors.html
+
+```html
+<ul class="error-messages" *ngIf="errorList">
+    <li *ngFor="let error of errorList">
+        {{ error }}
+    </li>
+</ul>
+```
+
+src/app/shared/list-errors/list-errors.ts
+
+```tsx
+import { Component, Input, OnInit } from '@angular/core';
+import { Errors } from '../../models';
+
+@Component({
+  selector: 'list-errors',
+  templateUrl: './list-errors.component.html',
+  styleUrls: ['./list-errors.component.css'],
+})
+export class ListErrorsComponent implements OnInit {
+  formattedErrors = [];
+
+  @Input()
+  set errors(errorList: Errors) {
+    this.formattedErrors = [];
+    if (errorList !== undefined) {
+      for (const field of Object.keys(errorList.errors)) {
+        this.formattedErrors.push(`${field} ${errorList.errors[field]}`);
+      }
+    }
+  }
+
+  get errorList(): Array<string> {
+    return this.formattedErrors;
+  }
+
+  constructor() {}
+
+  ngOnInit(): void {}
+}
+```
+
+src/app/shared/index.ts
+
+```tsx
+export * from './layout';
+export * from './list-errors/list-errors.component';
+export * from './services';
+```
+
+## AuthComponent template에 반영
+
+src/app/auth/auth.component.ts
+
+```tsx
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Errors } from '../models';
+import { UserService } from '../shared';
+
+@Component({
+  selector: 'auth-page',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css'],
+})
+export class AuthComponent implements OnInit {
+  authType = '';
+  title = '';
+  isSubmitting = false;
+  authForm: FormGroup;
+  errors: Errors;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {
+    this.authForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.url.subscribe((data) => {
+      // Get the last piece of the URL (it's either 'login' or 'register')
+      this.authType = data[data.length - 1].path;
+
+      // Set a title for the page accordingly
+      this.title = this.authType === 'login' ? 'Sign In' : 'Sign Up';
+
+      // add form control for username if this is the register page
+      this.authForm.addControl(
+        'username',
+        new FormControl('', Validators.required)
+      );
+    });
+  }
+
+  submitForm(): void {
+    this.isSubmitting = true;
+
+    const credentials = this.authForm.value;
+    this.userService.attemptAuth(this.authType, credentials).subscribe(
+      (_) => this.router.navigate(['/']),
+      (err) => {
+        // console.log(err as Errors);
+        this.errors = err as Errors;
+        this.isSubmitting = false;
+      }
+    );
+  }
+}
+```
+
+src/app/auth/auth.component.html
+
+```tsx
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h1 class="text-xs-center">{{ title }}</h1>
+        <p class="text-xs-center">
+          <a [routerLink]="['/login']" *ngIf="authType == 'register'">Have an account?</a>
+          <a [routerLink]="['/register']" *ngIf="authType == 'login'">Need an account?</a>
+        </p>
+        <list-errors [errors]="errors"></list-errors>
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+          <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group">
+              <input formControlName="username" placeholder="Username" class="form-control form-control-lg" type="text"
+                *ngIf="authType == 'register'" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input formControlName="email" placeholder="Email" class="form-control form-control-lg" type="text" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input formControlName="password" placeholder="Password" class="form-control form-control-lg"
+                type="password" />
+            </fieldset>
+            <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+              {{ title }}
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+```

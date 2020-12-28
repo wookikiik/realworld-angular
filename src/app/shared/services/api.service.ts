@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Error } from '../../models';
+import { Errors } from '../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class ApiService {
     // console.log(error.error);
     // console.log(error.status);
 
-    return throwError(error.error as Error);
+    return throwError(error.error as Errors);
   }
 
   public post(path: string, body = {}): Observable<any> {
