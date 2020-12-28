@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ListErrorsComponent } from '../shared';
+import { SharedModule } from '../shared';
 import { AuthComponent } from './auth.component';
 
 const authpageRouter: ModuleWithProviders<RouterModule> = RouterModule.forChild(
@@ -19,7 +19,7 @@ const authpageRouter: ModuleWithProviders<RouterModule> = RouterModule.forChild(
 );
 
 @NgModule({
-  declarations: [AuthComponent, ListErrorsComponent],
-  imports: [CommonModule, authpageRouter, ReactiveFormsModule],
+  declarations: [AuthComponent],
+  imports: [CommonModule, authpageRouter, ReactiveFormsModule, SharedModule],
 })
 export class AuthModule {}

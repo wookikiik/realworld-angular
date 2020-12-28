@@ -451,3 +451,92 @@ src/app/auth/auth.component.html
   </div>
 </div>
 ```
+
+# Shared Module 설정
+
+## Module 추가
+
+```bash
+ng generate module shared -m=app
+```
+
+src/app/shared/shared.module.ts
+
+```tsx
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FooterComponent, HeaderComponent } from './layout';
+import { ListErrorsComponent } from './list-errors/list-errors.component';
+import { ApiService, UserService } from './services';
+
+@NgModule({
+  declarations: [ListErrorsComponent, FooterComponent, HeaderComponent],
+  imports: [CommonModule, HttpClientModule],
+  providers: [ApiService, UserService],
+  exports: [ListErrorsComponent, FooterComponent, HeaderComponent],
+})
+export class SharedModule {}
+```
+
+src/app/shared/index.ts
+
+```tsx
+export * from './layout';
+export * from './list-errors/list-errors.component';
+export * from './services';
+export * from './shared.module';
+```
+
+## App, Auth module에 반영
+
+src/app/app.module.ts
+
+```tsx
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
+import { HomeModule } from './home/home.module';
+import { SharedModule } from './shared';
+
+const rounter = RouterModule.forRoot([], { useHash: true });
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, rounter, HomeModule, AuthModule, SharedModule],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+src/app/auth/auth.module.ts
+
+```tsx
+import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared';
+import { AuthComponent } from './auth.component';
+
+const authpageRouter: ModuleWithProviders<RouterModule> = RouterModule.forChild(
+  [
+    {
+      path: 'login',
+      component: AuthComponent,
+    },
+    {
+      path: 'register',
+      component: AuthComponent,
+    },
+  ]
+);
+
+@NgModule({
+  declarations: [AuthComponent],
+  imports: [CommonModule, authpageRouter, ReactiveFormsModule, SharedModule],
+})
+export class AuthModule {}
+```
