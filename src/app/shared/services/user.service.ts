@@ -9,6 +9,7 @@ import { JwtService } from './jwt.service';
   providedIn: 'root',
 })
 export class UserService {
+  constructor(private apiService: ApiService, private jwt: JwtService) {}
   private currentUserSubject = new BehaviorSubject<User>({} as User);
   public currentUser = this.currentUserSubject
     .asObservable()
@@ -16,8 +17,6 @@ export class UserService {
 
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
-
-  constructor(private apiService: ApiService, private jwt: JwtService) {}
 
   populate(): void {
     if (this.jwt.getToken()) {
@@ -42,7 +41,7 @@ export class UserService {
     this.isAuthenticatedSubject.next(true);
   }
 
-  public attemptAuth(type: string, credentials: object): Observable<User> {
+  attemptAuth(type: string, credentials: object): Observable<User> {
     const route = type === 'login' ? '/login' : '';
     return this.apiService.post(`/users${route}`, { user: credentials }).pipe(
       tap((data) => this.setAuth(data.user)),
@@ -50,7 +49,15 @@ export class UserService {
     );
   }
 
-  public getCurrentUser(): User {
+  update(user: User): Observable<User> {
+    return this.apiService.put('/user', { user }).pipe(
+      tap((data) => {
+        this.currentUserSubject.next(data.user);
+      })
+    );
+  }
+
+  getCurrentUser(): User {
     return this.currentUserSubject.value;
   }
 }

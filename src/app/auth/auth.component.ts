@@ -19,7 +19,7 @@ export class AuthComponent implements OnInit {
   title = '';
   isSubmitting = false;
   authForm: FormGroup;
-  errors: Errors;
+  errors = {} as Errors;
 
   constructor(
     private activatedRoute: ActivatedRoute,

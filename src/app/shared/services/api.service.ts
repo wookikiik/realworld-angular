@@ -40,10 +40,7 @@ export class ApiService {
     return throwError(error.error as Errors);
   }
 
-  public get(
-    path: string,
-    params: HttpParams = new HttpParams()
-  ): Observable<any> {
+  get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http
       .get(`${environment.api_url}${path}`, {
         headers: this.setHeaders(),
@@ -55,7 +52,15 @@ export class ApiService {
       );
   }
 
-  public post(path: string, body = {}): Observable<any> {
+  put(path: string, body = {}): Observable<any> {
+    return this.http
+      .put(`${environment.api_url}${path}`, JSON.stringify(body), {
+        headers: this.setHeaders(),
+      })
+      .pipe(catchError(this.formatErrors));
+  }
+
+  post(path: string, body = {}): Observable<any> {
     return this.http
       .post(`${environment.api_url}${path}`, JSON.stringify(body), {
         headers: this.setHeaders(),

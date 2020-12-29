@@ -12,7 +12,7 @@ export class ListErrorsComponent implements OnInit {
   @Input()
   set errors(errorList: Errors) {
     this.formattedErrors = [];
-    if (errorList !== undefined) {
+    if (errorList.errors !== undefined) {
       for (const field of Object.keys(errorList.errors)) {
         this.formattedErrors.push(`${field} ${errorList.errors[field]}`);
       }

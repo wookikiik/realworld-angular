@@ -5,12 +5,13 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { FooterComponent, HeaderComponent, SharedModule } from './shared';
+import { SettingsModule } from './settings/settings.module';
 
 const rounter = RouterModule.forRoot([], { useHash: true });
 
 @NgModule({
   declarations: [AppComponent, FooterComponent, HeaderComponent],
-  imports: [BrowserModule, rounter, HomeModule, AuthModule, SharedModule],
+  imports: [BrowserModule, rounter, HomeModule, AuthModule, SharedModule, SettingsModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
