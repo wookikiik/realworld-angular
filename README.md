@@ -9,3 +9,4 @@
 ## Step 3.&nbsp;&nbsp;*How To* - 서버와의 상호 작용 및 인증 서비스
 ## Step 4.&nbsp;&nbsp;*How To* - 인증된 사용자에 대한 요소 표시 및 숨기기 (using Directives)
 ## Step 5.&nbsp;&nbsp;*How To* - 페이지 이동 시 JWT 인증 지속
+## Step 6.&nbsp;&nbsp;*How To* - 인증 기반 접근 제한
