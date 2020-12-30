@@ -11,3 +11,4 @@
 ## Step 5.&nbsp;&nbsp;*How To* - 페이지 이동 시 JWT 인증 지속
 ## Step 6.&nbsp;&nbsp;*How To* - 인증 기반 접근 제한
 ## Step 7.&nbsp;&nbsp;*How To* - 회원정보 변경 페이지 구성
+## Step 8.&nbsp;&nbsp;*How To* - 회원 프로필 페이지 구성

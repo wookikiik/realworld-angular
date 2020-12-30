@@ -4,14 +4,23 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
-import { FooterComponent, HeaderComponent, SharedModule } from './shared';
+import { ProfileModule } from './profile/profile.module';
 import { SettingsModule } from './settings/settings.module';
+import { FooterComponent, HeaderComponent, SharedModule } from './shared';
 
 const rounter = RouterModule.forRoot([], { useHash: true });
 
 @NgModule({
   declarations: [AppComponent, FooterComponent, HeaderComponent],
-  imports: [BrowserModule, rounter, HomeModule, AuthModule, SharedModule, SettingsModule],
+  imports: [
+    BrowserModule,
+    rounter,
+    HomeModule,
+    AuthModule,
+    SharedModule,
+    SettingsModule,
+    ProfileModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -177,7 +177,7 @@ put(path: string, body = {}): Observable<any> {
 
 `src/app/settings/settings.module.ts`
 
-```bash
+```tsx
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -190,7 +190,7 @@ const settingspageRouter: ModuleWithProviders<RouterModule> = RouterModule.forCh
     {
       path: 'settings',
       component: SettingsComponent,
-      canActivate: [**AuthGuardGuard**],
+      canActivate: [AuthGuardGuard],
     },
   ]
 );
@@ -201,7 +201,7 @@ const settingspageRouter: ModuleWithProviders<RouterModule> = RouterModule.forCh
     CommonModule,
     SharedModule,
     settingspageRouter,
-    **ReactiveFormsModule**,
+    ReactiveFormsModule,
   ],
 })
 export class SettingsModule {}

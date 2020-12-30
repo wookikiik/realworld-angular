@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { environment } from 'environment';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Errors } from '../../models';
 import { JwtService } from './jwt.service';
 
@@ -46,10 +46,7 @@ export class ApiService {
         headers: this.setHeaders(),
         params,
       })
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError(this.formatErrors)
-      );
+      .pipe(catchError(this.formatErrors));
   }
 
   put(path: string, body = {}): Observable<any> {
