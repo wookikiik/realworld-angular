@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ProfilesService } from '../shared';
+import { ProfilesService, SharedModule } from '../shared';
 import { ProfileComponent } from './profile.component';
 import { ProfileResolver } from './profile.resolver';
 
@@ -19,7 +19,7 @@ const profilepagRouting: ModuleWithProviders<RouterModule> = RouterModule.forChi
 
 @NgModule({
   declarations: [ProfileComponent],
-  imports: [CommonModule, profilepagRouting],
+  imports: [CommonModule, profilepagRouting, SharedModule],
   providers: [ProfileResolver, ProfilesService],
 })
 export class ProfileModule {}

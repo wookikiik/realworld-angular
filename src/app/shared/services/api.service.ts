@@ -64,4 +64,10 @@ export class ApiService {
       })
       .pipe(catchError(this.formatErrors));
   }
+
+  delete(path: string): Observable<any> {
+    return this.http
+      .delete(`${environment.api_url}${path}`, { headers: this.setHeaders() })
+      .pipe(catchError(this.formatErrors));
+  }
 }
