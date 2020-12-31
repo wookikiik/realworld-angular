@@ -25,4 +25,16 @@ export class ArticlesService {
         .pipe(map((data: { article: Article }) => data.article));
     }
   }
+
+  destory(slug: string): Observable<boolean> {
+    return this.apiService.delete(`/articles/${slug}`);
+  }
+
+  favorite(slug: string): Observable<Article> {
+    return this.apiService.post(`/articles/${slug}/favorite`);
+  }
+
+  unfavorite(slug: string): Observable<Article> {
+    return this.apiService.delete(`/articles/${slug}/favorite`);
+  }
 }

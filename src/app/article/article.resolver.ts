@@ -7,23 +7,21 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ProfilesService } from '../shared';
+import { ArticlesService } from '../shared';
 
 @Injectable()
-export class ProfileResolver implements Resolve<any> {
+export class ArticleResolver implements Resolve<any> {
   constructor(
-    private profileService: ProfilesService,
-    private router: Router
+    private router: Router,
+    private articleService: ArticlesService
   ) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.profileService.get(route.params.username).pipe(
-      catchError((err) => {
-        return this.router.navigateByUrl('/');
-      })
-    );
+    return this.articleService
+      .get(route.params.slug)
+      .pipe(catchError((err) => this.router.navigateByUrl('/')));
   }
 }
