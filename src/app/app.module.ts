@@ -7,6 +7,7 @@ import { HomeModule } from './home/home.module';
 import { ProfileModule } from './profile/profile.module';
 import { SettingsModule } from './settings/settings.module';
 import { FooterComponent, HeaderComponent, SharedModule } from './shared';
+import { EditorModule } from './editor/editor.module';
 
 const rounter = RouterModule.forRoot([], { useHash: true });
 
@@ -20,6 +21,7 @@ const rounter = RouterModule.forRoot([], { useHash: true });
     SharedModule,
     SettingsModule,
     ProfileModule,
+    EditorModule,
   ],
   bootstrap: [AppComponent],
 })
