@@ -1,7 +1,8 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Article } from 'src/app/models';
+import { Article, ArticleListConfig } from 'src/app/models';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -14,6 +15,19 @@ export class ArticlesService {
     return this.apiService
       .get(`/articles/${slug}`)
       .pipe(map((data) => data.article));
+  }
+
+  query(
+    config: ArticleListConfig
+  ): Observable<{ articles: Article[]; articlesCount: number }> {
+    const params = new HttpParams();
+    Object.keys(config.filters).forEach((key) => {
+      params.set(key, config.filters[key]);
+    });
+    return this.apiService.get(
+      `/articles${config.type === 'feed' ? '/feed' : ''}`,
+      params
+    );
   }
 
   save(article: Article): Observable<Article> {
