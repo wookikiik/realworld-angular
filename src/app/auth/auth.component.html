@@ -4,43 +4,50 @@
       <div class="col-md-6 offset-md-3 col-xs-12">
         <h1 class="text-xs-center">{{ title }}</h1>
         <p class="text-xs-center">
-          <a *ngIf="authType === 'login'" routerLink="/register"
+          <a
+            *ngIf="authTypeEnum.LOGIN === authType"
+            [routerLink]="['/register']"
             >Need an account?</a
           >
-          <a *ngIf="authType === 'register'" routerLink="/login"
+          <a
+            *ngIf="authTypeEnum.REGISTER === authType"
+            [routerLink]="['/login']"
             >Have an account?</a
           >
         </p>
 
-        <ul *ngIf="errors" class="error-messages">
-          <li>That email is already taken</li>
-        </ul>
+        <list-errors [error]="errors"></list-errors>
 
-        <form>
-          <fieldset class="form-group" *ngIf="authType === 'register'">
-            <input
-              class="form-control form-control-lg"
-              type="text"
-              placeholder="Your Name"
-            />
+        <form [formGroup]="authForm" (submit)="onSubmit()">
+          <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group" *ngIf="authType === 'register'">
+              <input
+                class="form-control form-control-lg"
+                type="text"
+                placeholder="Your Name"
+                formControlName="username"
+              />
+            </fieldset>
+            <fieldset class="form-group">
+              <input
+                class="form-control form-control-lg"
+                type="text"
+                placeholder="Email"
+                formControlName="email"
+              />
+            </fieldset>
+            <fieldset class="form-group">
+              <input
+                class="form-control form-control-lg"
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+              />
+            </fieldset>
+            <button class="btn btn-lg btn-primary pull-xs-right">
+              {{ title }}
+            </button>
           </fieldset>
-          <fieldset class="form-group">
-            <input
-              class="form-control form-control-lg"
-              type="text"
-              placeholder="Email"
-            />
-          </fieldset>
-          <fieldset class="form-group">
-            <input
-              class="form-control form-control-lg"
-              type="password"
-              placeholder="Password"
-            />
-          </fieldset>
-          <button class="btn btn-lg btn-primary pull-xs-right">
-            {{ title }}
-          </button>
         </form>
       </div>
     </div>

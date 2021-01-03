@@ -5,3 +5,8 @@ export interface User {
   bio: string;
   image: string;
 }
+
+export enum AuthType {
+  LOGIN = 'login',
+  REGISTER = 'register',
+}
