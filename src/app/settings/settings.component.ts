@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../core/models';
+import { Errors, User } from '../core/models';
 import { UserService } from '../core/services/user.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { UserService } from '../core/services/user.service';
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent implements OnInit {
+  errors: Errors = {} as Errors;
+
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
@@ -31,7 +33,19 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit(): void {
-    //
+    this.isSubmitting = true;
+    this.user = { ...this.setting.value };
+    this.userService.update(this.user).subscribe(
+      //
+      (updatedUser) => {
+        this.isSubmitting = false;
+        this.router.navigateByUrl(`/profile/${updatedUser.username}`);
+      },
+      (err) => {
+        this.errors = err;
+        this.isSubmitting = false;
+      }
+    );
   }
 
   logout(): void {

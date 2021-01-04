@@ -3,8 +3,9 @@
     <div class="row">
       <div class="col-md-6 offset-md-3 col-xs-12">
         <h1 class="text-xs-center">Your Settings</h1>
+        <list-errors [error]="errors"></list-errors>
         <form [formGroup]="setting" (submit)="onSubmit()">
-          <fieldset>
+          <fieldset [disabled]="isSubmitting">
             <fieldset class="form-group">
               <input
                 class="form-control"
@@ -42,6 +43,7 @@
                 class="form-control form-control-lg"
                 type="password"
                 placeholder="Password"
+                formControlName="password"
               />
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right">

@@ -1,0 +1,13 @@
+<article-preview
+  *ngFor="let article of results"
+  [article]="article"
+></article-preview>
+<div class="app-article-preview" [hidden]="!loading">Loading articles...</div>
+<ngb-pagination
+  *ngIf="this.pagination$ | async as pagination"
+  [collectionSize]="pagination.collectionSize"
+  [pageSize]="pagination.pageSize"
+  [page]="pagination.page"
+  [directionLinks]="false"
+  (pageChange)="setPageTo($event)"
+></ngb-pagination>

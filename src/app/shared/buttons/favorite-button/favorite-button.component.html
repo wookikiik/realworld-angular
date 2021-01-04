@@ -1,0 +1,11 @@
+<button
+  (click)="toggleFavority()"
+  class="btn btn-sm pull-xs-right"
+  [ngClass]="{
+    disable: isSubmitting,
+    'btn-outline-primary': !article.favorited,
+    'btn-primary': article.favorited
+  }"
+>
+  <i class="ion-heart"></i><ng-content></ng-content>
+</button>

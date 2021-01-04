@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { AuthType, User } from '../models';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
@@ -53,5 +53,12 @@ export class UserService {
 
   getCurrentUser(): User {
     return this.currentUserSubject.value;
+  }
+
+  update(user: User): Observable<User> {
+    return this.apiService.put('/user', { user }).pipe(
+      map((data) => data.user),
+      tap((updatedUser) => this.currentUserSubject.next(updatedUser))
+    );
   }
 }

@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { ArticleListConfig } from 'src/app/core/models';
 
 @Component({
   selector: 'profile-articles',
   templateUrl: './profile-articles.component.html',
-  styleUrls: ['./profile-articles.component.css']
 })
 export class ProfileArticlesComponent implements OnInit {
+  constructor(private route: ActivatedRoute) {}
 
-  constructor() { }
+  config: ArticleListConfig = {
+    type: 'all',
+    filters: {},
+  };
 
   ngOnInit(): void {
+    this.route.parent.data
+      .pipe(map((data) => data.profile))
+      .subscribe((profile) => {
+        this.config.filters.author = profile.username;
+      });
   }
-
 }
