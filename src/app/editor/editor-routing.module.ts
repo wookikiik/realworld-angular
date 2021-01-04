@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuardGuard } from '../core/guards/auth.guard';
+import { AuthGuard } from '../core/guards/auth.guard';
 import { EditorComponent } from './editor.component';
 
 const routes: Routes = [
-  { path: '', component: EditorComponent, canActivate: [AuthGuardGuard] },
+  { path: '', component: EditorComponent, canActivate: [AuthGuard] },
   { path: ':slug', component: EditorComponent },
 ];
 

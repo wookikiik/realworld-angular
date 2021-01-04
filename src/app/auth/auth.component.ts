@@ -15,7 +15,7 @@ import { UserService } from '../core/services/user.service';
 })
 export class AuthComponent implements OnInit {
   authTypeEnum = AuthType;
-  isSubmitting: boolean;
+  isSubmitting = false;
   erorrs: Errors;
   authType: AuthType;
   title: string;

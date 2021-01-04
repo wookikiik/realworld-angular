@@ -5,6 +5,7 @@ import { ListErrorsComponent } from './components/list-errors/list-errors.compon
 import { ShowAuthedDirective } from './directives/show-authed.directive';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { FollowProfileButtonComponent } from './buttons/follow-profile-button/follow-profile-button.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { HeaderComponent } from './layout/header/header.component';
     FooterComponent,
     ShowAuthedDirective,
     ListErrorsComponent,
+    FollowProfileButtonComponent,
   ],
   imports: [CommonModule, RouterModule],
   exports: [
@@ -19,6 +21,7 @@ import { HeaderComponent } from './layout/header/header.component';
     FooterComponent,
     ShowAuthedDirective,
     ListErrorsComponent,
+    FollowProfileButtonComponent,
   ],
 })
 export class SharedModule {}
