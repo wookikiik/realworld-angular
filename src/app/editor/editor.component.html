@@ -2,13 +2,15 @@
   <div class="container page">
     <div class="row">
       <div class="col-md-10 offset-md-1 col-xs-12">
-        <form>
-          <fieldset>
+        <list-errors [error]="errors"></list-errors>
+        <form [formGroup]="articleForm">
+          <fieldset [disabled]="isSubmitting">
             <fieldset class="form-group">
               <input
                 type="text"
                 class="form-control form-control-lg"
                 placeholder="Article Title"
+                formControlName="title"
               />
             </fieldset>
             <fieldset class="form-group">
@@ -16,6 +18,7 @@
                 type="text"
                 class="form-control"
                 placeholder="What's this article about?"
+                formControlName="description"
               />
             </fieldset>
             <fieldset class="form-group">
@@ -23,6 +26,7 @@
                 class="form-control"
                 rows="8"
                 placeholder="Write your article (in markdown)"
+                formControlName="body"
               ></textarea>
             </fieldset>
             <fieldset class="form-group">
@@ -30,10 +34,24 @@
                 type="text"
                 class="form-control"
                 placeholder="Enter tags"
+                [formControl]="tagField"
+                (keyup.enter)="addTag()"
               />
-              <div class="tag-list"></div>
+              <div class="tag-list">
+                <span
+                  *ngFor="let tag of article.tagList"
+                  class="tag-default tag-pill"
+                >
+                  <i class="ion-close-round" (click)="removeTag(tag)"></i>
+                  {{ tag }}
+                </span>
+              </div>
             </fieldset>
-            <button class="btn btn-lg pull-xs-right btn-primary" type="button">
+            <button
+              class="btn btn-lg pull-xs-right btn-primary"
+              type="button"
+              (click)="onSubmit()"
+            >
               Publish Article
             </button>
           </fieldset>

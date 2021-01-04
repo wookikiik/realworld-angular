@@ -51,10 +51,14 @@ export class ArticleService {
   }
 
   favorite(slug: string): Observable<Article> {
-    return this.apiService.post(`/articles/${slug}/favorite`);
+    return this.apiService
+      .post(`/articles/${slug}/favorite`)
+      .pipe(map((data) => data.article));
   }
 
   unfavorite(slug: string): Observable<Article> {
-    return this.apiService.delete(`/articles/${slug}/favorite`);
+    return this.apiService
+      .delete(`/articles/${slug}/favorite`)
+      .pipe(map((data) => data.article));
   }
 }
