@@ -11,6 +11,7 @@ import { ListErrorsComponent } from './components/list-errors/list-errors.compon
 import { ShowAuthedDirective } from './directives/show-authed.directive';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { MarkdownPipe } from './pipes/markdown.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HeaderComponent } from './layout/header/header.component';
     ArticleMetaComponent,
     FavoriteButtonComponent,
     ArticleListComponent,
+    MarkdownPipe,
   ],
   imports: [CommonModule, RouterModule, NgbModule],
   exports: [
@@ -35,6 +37,7 @@ import { HeaderComponent } from './layout/header/header.component';
     ArticleMetaComponent,
     FavoriteButtonComponent,
     ArticleListComponent,
+    MarkdownPipe,
   ],
 })
 export class SharedModule {}
