@@ -12,6 +12,7 @@ interface Pagination {
 @Component({
   selector: 'article-list',
   templateUrl: './article-list.component.html',
+  styleUrls: ['./article-list.component.css'],
 })
 export class ArticleListComponent implements OnInit {
   query: ArticleListConfig;
@@ -28,16 +29,13 @@ export class ArticleListComponent implements OnInit {
     if (config) {
       this.query = config;
       this.currentPage = 1;
+      this.runQuery();
     }
   }
 
   constructor(private articleService: ArticleService) {}
 
-  ngOnInit(): void {
-    if (this.query) {
-      this.runQuery();
-    }
-  }
+  ngOnInit(): void {}
 
   runQuery(): void {
     this.loading = true;

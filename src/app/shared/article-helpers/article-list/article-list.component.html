@@ -8,6 +8,8 @@
   [collectionSize]="pagination.collectionSize"
   [pageSize]="pagination.pageSize"
   [page]="pagination.page"
-  [directionLinks]="false"
+  [directionLinks]="true"
+  [maxSize]="5"
+  [rotate]="true"
   (pageChange)="setPageTo($event)"
 ></ngb-pagination>
