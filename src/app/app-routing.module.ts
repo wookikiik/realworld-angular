@@ -1,10 +1,40 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'article',
+    loadChildren: () =>
+      import('./article/article.module').then((module) => module.ArticleModule),
+  },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./profile/profile.module').then((module) => module.ProfileModule),
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.module').then(
+        (module) => module.SettingsModule
+      ),
+  },
+  {
+    path: 'editor',
+    loadChildren: () =>
+      import('./editor/editor.module').then((module) => module.EditorModule),
+  },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      // preload all modules; optionally we could
+      // implement a custom preloading strategy for just some
+      // of the modules
+      preloadingStrategy: PreloadAllModules,
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
