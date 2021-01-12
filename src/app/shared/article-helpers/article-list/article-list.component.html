@@ -1,0 +1,9 @@
+<ng-container *ngIf="articles$ | async as articles; else artileLoding">
+  <article-preview
+    *ngFor="let article of articles.articles"
+    [article]="article"
+  ></article-preview>
+</ng-container>
+<ng-template #artileLoding>
+  <div>Loading Artiles...</div>
+</ng-template>

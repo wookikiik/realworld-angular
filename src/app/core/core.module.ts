@@ -10,6 +10,7 @@ import { HttpTokenInterceptor } from './interceptors/http-token.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpTokenInterceptor,
+      multi: true,
     },
   ],
 })

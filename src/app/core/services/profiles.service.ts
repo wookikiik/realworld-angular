@@ -12,19 +12,19 @@ export class ProfilesService {
 
   getProfile(username: string): Observable<Profile> {
     return this.api
-      .get(`/api/profiles/${username}`) //
+      .get(`/profiles/${username}`) //
       .pipe(map((data: { profile: Profile }) => data.profile));
   }
 
   followUser(username: string): Observable<Profile> {
     return this.api
-      .post(`/api/profiles/${username}/follow`) //
+      .post(`/profiles/${username}/follow`) //
       .pipe(map((data: { profile: Profile }) => data.profile));
   }
 
   unfollowUser(username: string): Observable<Profile> {
     return this.api
-      .delete(`/api/profiles/${username}/follow`) //
+      .delete(`/profiles/${username}/follow`) //
       .pipe(map((data: { profile: Profile }) => data.profile));
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./editor/editor.module').then((module) => module.EditorModule),
   },
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({

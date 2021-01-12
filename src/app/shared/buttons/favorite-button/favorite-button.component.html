@@ -1,0 +1,13 @@
+<button
+  class="btn btn-sm"
+  [ngClass]="{
+    'btn-primary': article.favorited,
+    'btn-outline-primary': !article.favorited
+  }"
+  (click)="onTrigger()"
+>
+  <i class="ion-heart"></i>
+  <ng-content></ng-content>
+</button>
+
+<!-- &nbsp; Favorite Post <span class="counter">(29)</span> -->

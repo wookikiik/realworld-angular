@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-block">
+    <p class="card-text">
+      {{ comment.body }}
+    </p>
+  </div>
+  <div class="card-footer">
+    <a
+      [routerLink]="['/profile', comment.author.username]"
+      class="comment-author"
+    >
+      <img [src]="comment.author.image" class="comment-author-img" />
+    </a>
+    &nbsp;
+    <a
+      [routerLink]="['/profile', comment.author.username]"
+      class="comment-author"
+      >{{ comment.author.username }}</a
+    >
+    <span class="date-posted">Dec 29th</span>
+  </div>
+</div>

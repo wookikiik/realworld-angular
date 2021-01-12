@@ -1,0 +1,11 @@
+<button
+  class="btn btn-sm action-btn"
+  [ngClass]="{
+    'btn-secondary': profile.following,
+    'btn-outline-secondary': !profile.following
+  }"
+  (click)="onTrigger()"
+>
+  <i class="ion-plus-round"></i> &nbsp;
+  {{ profile.following ? "Unfollow" : "Follow" }} {{ profile.username }}
+</button>

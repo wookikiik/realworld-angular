@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environments } from 'environments';
+import { environment } from '@environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Errors } from '../models';
@@ -22,25 +22,25 @@ export class ApiService {
       | { [param: string]: string | string[] } = new HttpParams()
   ): Observable<any> {
     return this.http
-      .get(`${environments.api_url}${path}`, { params }) //
+      .get(`${environment.api_url}${path}`, { params }) //
       .pipe(catchError(this.formatErrors));
   }
 
   post(path: string, payload: object = {}): Observable<any> {
     return this.http
-      .post(`${environments.api_url}${path}`, payload) //
+      .post(`${environment.api_url}${path}`, payload) //
       .pipe(catchError(this.formatErrors));
   }
 
   put(path: string, payload: object = {}): Observable<any> {
     return this.http
-      .put(`${environments.api_url}${path}`, { payload }) //
+      .put(`${environment.api_url}${path}`, payload) //
       .pipe(catchError(this.formatErrors));
   }
 
   delete(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http
-      .delete(`${environments.api_url}${path}`, { params }) //
+      .delete(`${environment.api_url}${path}`, { params }) //
       .pipe(catchError(this.formatErrors));
   }
 }

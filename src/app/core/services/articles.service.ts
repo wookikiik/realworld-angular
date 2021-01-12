@@ -11,46 +11,48 @@ export class ArticlesService {
   constructor(private api: ApiService) {}
 
   getArticles(config: ArticleListConfig): Observable<Articles> {
-    const path = `/api/articles${config.type === 'feed' ? '/feed' : ''}`;
+    const path = `/articles${config.type === 'feed' ? '/feed' : ''}`;
+
     const params = Object.keys(config.filters).reduce((returnParams, key) => {
-      return { ...returnParams, key: config.filters[key] };
+      return { ...returnParams, [key]: config.filters[key] };
     }, {});
+
     return this.api.get(path, params);
   }
 
   getArticle(slug: string): Observable<Article> {
     return this.api
-      .get(`/api/artiles/${slug}`)
+      .get(`/articles/${slug}`)
       .pipe(map((data: { article: Article }) => data.article));
   }
 
   createArticle(article: Article): Observable<Article> {
     return this.api
-      .post('/api/artiles', article)
+      .post('/articles', article)
       .pipe(map((data: { article: Article }) => data.article));
   }
 
   updateArticle(slug: string, article: Article): Observable<Article> {
     return this.api
-      .put(`/api/artiles/${slug}`, article)
+      .put(`/articles/${slug}`, article)
       .pipe(map((data: { article: Article }) => data.article));
   }
 
   deleteArticle(slug: string): Observable<boolean> {
     return this.api
-      .delete(`/api/artiles/${slug}`)
+      .delete(`/articles/${slug}`)
       .pipe(map((data: { success: boolean }) => data.success));
   }
 
   favoriteArticle(slug: string): Observable<Article> {
     return this.api
-      .post(`/api/artiles/${slug}/favorite`)
+      .post(`/articles/${slug}/favorite`)
       .pipe(map((data: { article: Article }) => data.article));
   }
 
   unfavoriteArticle(slug: string): Observable<Article> {
     return this.api
-      .delete(`/api/artiles/${slug}/favorite`)
+      .delete(`/articles/${slug}/favorite`)
       .pipe(map((data: { article: Article }) => data.article));
   }
 }

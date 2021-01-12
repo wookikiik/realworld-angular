@@ -1,0 +1,24 @@
+<div class="article-preview">
+  <article-meta [article]="article">
+    <favorite-button
+      class="pull-xs-right"
+      [article]="article"
+      (trigger)="onTriggerFavorite($event)"
+    >
+      {{ article.favoritesCount }}</favorite-button
+    >
+  </article-meta>
+  <a [routerLink]="['/article', article.slug]" class="preview-link">
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.description }}</p>
+    <span>Read more...</span>
+    <ul class="tag-list">
+      <li
+        *ngFor="let tag of article.tagList"
+        class="tag-default tag-pill tag-outline"
+      >
+        {{ tag }}
+      </li>
+    </ul>
+  </a>
+</div>
